@@ -1,0 +1,59 @@
+<div class="container custom-search-component"> 
+  <!-- Title with slot for custom titles -->
+  <h1 class="search-title">
+    <slot name="title">Search TikTok Videos</slot>
+  </h1>
+
+  <!-- Search Box Container -->
+  <div class="search-container">
+    <div class="search-box">
+      <input 
+        v-model="query" 
+        :placeholder="$attrs.placeholder || 'Search for TikTok videos'" 
+        @input="fetchVideos" 
+      />
+      <button @click="fetchVideos">
+        <slot name="search-button-text">Search</slot>
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div v-if="fetchError" class="error-message">
+    <p><slot name="error-message">There was an error fetching videos. Please try again later.</slot></p>
+  </div>
+
+  <!-- Filter Container -->
+  <div v-if="videos.length > 0 && !fetchError" class="filter-container">
+    <div class="sort-options">
+      <label for="sort">Sort by:</label>
+      <select id="sort" v-model="sortOption">
+        <option value="relevance">Relevance</option>
+        <option value="date">Date</option>
+      </select>
+    </div>
+    <h2 class="search-results-title">Search Results</h2>
+  </div>
+
+  <!-- Video Grid -->
+  <div v-if="videos.length > 0 && !fetchError">
+    <div class="video-grid">
+      <div
+        v-for="(video, index) in sortedVideos"
+        :key="index"
+        class="video-item"
+        @click="fetchEmbed(video.url, index)"
+      >
+        <!-- Embed Container with scoped slot -->
+        <div v-if="selectedVideoIndex === index" class="embed-container">
+          <div v-html="embedHtml" class="tiktok-iframe"></div>
+        </div>
+        <!-- Video Thumbnail -->
+        <div v-else>
+          <h3 class="video-title">{{ video.title || "No Title" }}</h3>
+          <img :src="video.imageUrl" alt="Video Thumbnail" class="thumbnail" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
