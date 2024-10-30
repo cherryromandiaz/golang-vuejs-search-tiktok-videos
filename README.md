@@ -1,5 +1,7 @@
 # Custom TikTok Video Player Prototype
 
+![Custom Tiktok Video Player](https://raw.githubusercontent.com/cherryromandiaz/golang-vuejs-search-tiktok-videos/refs/heads/main/tiktok.jpg)
+
 This project is a TikTok video search and display component built with Vue.js, styled for flexible integration and customization within other applications. It includes lazy loading, caching, and sorting features, with a Go backend that fetches TikTok videos based on user defined search terms.
 
 ## Features
